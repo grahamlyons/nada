@@ -1,6 +1,6 @@
-var nano = require('./lib/nano'),
+var nada = require('./lib/nada'),
     View = require('./lib/view');
 
-exports.app = nano.app;
-exports.start = nano.start;
+exports.app = nada.app;
+exports.start = nada.start;
 exports.View = View;
