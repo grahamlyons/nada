@@ -47,6 +47,15 @@ exports.test = new litmus.Test('Test nano framework', function() {
 
     }
 
+    function isError(response, message) {
+
+        test.is(
+            response.status,
+            500, 
+            'Status is 500: ' + message);
+
+    }
+
     this.ok(response.setBody, 'Response has setBody method');
     this.ok(response.setContentType, 'Response has setContentType method');
     this.ok(response.setHeader, 'Response has setHeader method');
@@ -252,7 +261,7 @@ exports.test = new litmus.Test('Test nano framework', function() {
         });
 
         /**
-         * Test simple route
+         * Test route route with params
          */
         response = app.dispatch(mockRequest('GET', '/insert/name/graham'), new nano.Response());
 
@@ -260,4 +269,22 @@ exports.test = new litmus.Test('Test nano framework', function() {
 
         handler.resolve();
     });
+
+    this.async('Test error handling', function(handler) {
+        
+        var app = nano.app,
+            test = this,
+            response;
+
+        app.get('/simpleroute', function(request, response) {
+            throw new Error('Something has gone terribly wrong');
+        });
+
+        response = app.dispatch(mockRequest('GET', '/simpleroute'), new nano.Response());
+
+        isError(response, 'Error is caught and returned as 500 response');
+
+        handler.resolve();
+    });
+    
 });
