@@ -1,3 +1,13 @@
-# Node framework
+# Nada Node framework
 
-Restful framework for Node. Need to change name to be able to release on NPM
+Little framework running on Node
+
+Use like:
+    var nada = require('nada'),
+        app = nada.app;
+
+    app.get('/', function() {
+        return 'Hello world';
+    });
+
+    nada.start();
